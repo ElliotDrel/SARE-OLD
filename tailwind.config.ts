@@ -9,7 +9,7 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      // Custom animations for dramatic effect
+      // Custom animations for dramatic effect.
       keyframes: {
         shake: {
           '0%, 100%': { transform: 'translateX(0)' },
