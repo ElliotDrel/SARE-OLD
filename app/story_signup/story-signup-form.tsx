@@ -43,7 +43,13 @@ export default function StorySignupForm({ token }: StorySignupFormProps) {
       formData.append("password", password);
       formData.append("token", token);
 
-      await signUp(formData);
+      const result = await signUp(formData);
+      
+      if (!result.success) {
+        setError(result.error || "An error occurred during signup. Please try again.");
+        setIsLoading(false);
+        return;
+      }
       
       router.push(`/story_submit?token=${token}`);
       
@@ -54,7 +60,6 @@ export default function StorySignupForm({ token }: StorySignupFormProps) {
       } else {
         setError("An error occurred during signup. Please try again.");
       }
-    } finally {
       setIsLoading(false);
     }
   };
@@ -112,15 +117,15 @@ export default function StorySignupForm({ token }: StorySignupFormProps) {
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-              <p className="text-red-600 text-sm">{error}</p>
+            <div className="p-3 rounded-md bg-red-50 border border-red-200">
+              <p className="text-sm text-red-600 font-medium">{error}</p>
             </div>
           )}
 
           <Button
             type="submit"
+            className="w-full bg-primary-teal hover:bg-primary-teal/90"
             disabled={isLoading}
-            className="w-full bg-accent-coral hover:bg-accent-coral/90 text-white font-medium py-3"
           >
             {isLoading ? "Creating Account..." : "Create Account & Continue"}
           </Button>
